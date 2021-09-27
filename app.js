@@ -1,19 +1,51 @@
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
 
-const PORT = 3000;
+const PORT = 4000;
 
 const server = http.createServer((req, res) => {
   console.log('Server request');
-  console.log(req.url, req.method);
 
-  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'text/html');
 
-  const data = JSON.stringify([
-    {name: 'Tommy', age: 35},
-    {name: 'Alex', age: 40}
-  ]);
+  const createPath = (page) => path.resolve(__dirname, 'views', `${page}.html`);
 
-  res.end(data);
+  let basePath = '';
+
+  switch(req.url) {
+    case '/':
+    case '/home':
+    case '/index.html':
+      basePath = createPath('index');
+      res.statusCode = 200;
+      break;
+    case '/contacts':
+      basePath = createPath('contacts');
+      res.statusCode = 200;
+      break;
+    case '/about-us':
+      res.statusCode = 301;
+      res.setHeader('Location', '/contacts');
+      res.end();
+      break;
+    default:
+      basePath = createPath('error');
+      res.statusCode = 404;
+      break;
+  }
+
+  fs.readFile(basePath, (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      console.log(err.message);
+      res.end();
+    }
+    else {
+      res.write(data);
+      res.end();
+    }
+  });
 });
 
 server.listen(PORT, 'localhost', (error) => {
