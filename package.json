@@ -1,0 +1,26 @@
+{
+  "name": "node-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarretHawke/node-start.git"
+  },
+  "author": "Aleksandra Barabash <alexandra17au@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GarretHawke/node-start/issues"
+  },
+  "homepage": "https://github.com/GarretHawke/node-start#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  }
+}
